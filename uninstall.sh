@@ -25,6 +25,7 @@ rm -f "$SYSTEMD_DIR/nordbar.service"
 
 echo "Removing script and related assets..."
 rm -f "$SCRIPTS_DIR/nord.sh"
+rm -f "$SCRIPTS_DIR/togglenord.sh"
 rm -f "$WAYBAR_ASSETS_DIR/country-by-abbreviation.json"
 rm -f "$WAYBAR_ASSETS_DIR/vpnout.txt"
 rm -f "$CACHE_DIR/ip_location.txt"

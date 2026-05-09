@@ -22,8 +22,8 @@ if ! grep -q '"custom/vpn"' "$CONFIG_PATH"; then
     \
     "custom/vpn": {\
         "format": "{text}",\
-        "exec": "~/.config/waybar/scripts/nord.sh",\
-        "on-click": "~/.config/waybar/scripts/nord.sh --toggle",\
+        "exec": "cat '$WAYBAR_ASSETS_DIR'/vpnout.txt",\
+        "on-click": "'$SCRIPTS_DIR'/togglenord.sh",\
         "on-click-right": "nordvpn-gui &",\
         "interval": 3,\
         "return-type": "json",\
@@ -49,10 +49,19 @@ EOF
 
 echo "Installing script..."
 mkdir -p "$SCRIPTS_DIR"
-cp "$CURRENT_DIR/nord.sh" "$SCRIPTS_DIR/" 2> /dev/null
+cp "$CURRENT_DIR/nord.sh" "$CURRENT_DIR/togglenord.sh" "$SCRIPTS_DIR/" 2> /dev/null
+
+if [[ $# -gt 0 ]]; then
+    sed -i "0,/DEFAULT_COUNTRY=.*/s//DEFAULT_COUNTRY=$1/" "$SCRIPTS_DIR"/togglenord.sh
+fi
 
 if [[ $? -eq 0 ]]; then
-    echo "Installed to $SCRIPTS_DIR/nord.sh."
+    case $# in
+        0) echo "Installed to $SCRIPTS_DIR/nord.sh."
+            ;;
+        *) echo "Installed to $SCRIPTS_DIR/nord.sh with default country $1."
+            ;;
+    esac
     chmod +x "$SCRIPTS_DIR/nord.sh"
 else
     echo ""
