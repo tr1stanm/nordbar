@@ -18,6 +18,9 @@ If you specify a default country during installation, the vpn will automatically
 to that country when toggling. this can be useful if you don't want to connect to whatever
 nordVPN decides will be your default based on your geographic location.
 
+## demo
+https://github.com/user-attachments/assets/7b2864fd-0102-4422-b46c-2c2ad7fd66b7
+
 ## installation
 This module was developed on Hyprland. However, waybar works with any wayland-based compositor.  
 If you're not using hyprland, however, be aware the install/uninstall scripts will not work properly and you'll need to manually restart waybar as the script uses a hyprctl command to do so.
