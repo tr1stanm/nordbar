@@ -84,8 +84,8 @@ a result of the uninstall script.
   ],
   "custom/vpn": {
       "format": "{text}",
-      "exec": "~/.config/waybar/scripts/nord.sh",
-      "on-click": "~/.config/waybar/scripts/nord.sh --toggle",
+      "exec": "~/.config/scripts/nord.sh",
+      "on-click": "~/.config/scripts/nordtoggle.sh",
       "on-click-right": "nordvpn-gui &",
       "interval": 3,
       "return-type": "json",
