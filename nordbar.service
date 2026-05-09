@@ -3,10 +3,9 @@ Description=VPN Monitoring Service for Waybar
 After=network.target
 
 [Service]
-ExecStart=/home/tristan/.config/scripts/nord.sh
+ExecStart=%h/.config/scripts/nord.sh
 Restart=always
-Environment=PATH=/usr/local/bin:/usr/bin:/bin:$HOME/.local/bin
-Environment=XDG_RUNTIME_DIR=/run/user/%U
+Environment=PATH=/usr/local/bin:/usr/bin:/bin:%h/.local/bin
 
 [Install]
 WantedBy=default.target
