@@ -10,22 +10,37 @@ Waybar module and script for monitoring + changing NordVPN status
 - hyprland (optional): https://hypr.land/
 
 ## usage
-the chain link icon in the top corner monitors when the VPN is connected or disconnected via the systemd service.  
-left click on the icon to toggle connect status.  
-right click to pull up the NordVPN GUI to select a country to connect to.
+The chain link icon in the top corner monitors when the VPN is connected or disconnected via the systemd service.  
+Left click on the icon to toggle connection status.  
+Right click to pull up the NordVPN GUI to select a country to connect to.
+
+If you specify a default country during installation, the vpn will automatically reconnect
+to that country when toggling. this can be useful if you don't want to connect to whatever
+nordVPN decides will be your default based on your geographic location.
 
 ## installation
 This module was developed on Hyprland. However, waybar works with any wayland-based compositor.  
-If you're not using hyprland, however, be aware the install/uninstall scripts will not work properly 
-and you'll need to manually restart waybar as the script uses a hyprctl command to do so.
+If you're not using hyprland, however, be aware the install/uninstall scripts will not work properly and you'll need to manually restart waybar as the script uses a hyprctl command to do so.
 
 ### automatic install
 Back up your waybar config files first!!  
-`mkdir ~/.config/waybarbackup ; cp ~/.config/waybar/* ~/.config/waybarbackup`  
+```bash
+mkdir ~/.config/waybarbackup
+cp ~/.config/waybar/* ~/.config/waybarbackup
+```  
 This way if anything does awry during installation you have clean configs to restore to.
 
 `git clone` this repo into some directory on your machine.  
-run `cd nordbar ; chmod +x install.sh uninstall.sh ; ./install.sh`
+```bash
+cd nordbar
+chmod +x install.sh uninstall.sh
+
+# if you want to specify a default country:
+./install.sh {your country name}
+
+# otherwise
+./install.sh
+```
 
 Done!
 
@@ -40,27 +55,27 @@ I'd also highly recommend against running the automatic uninstall if the above i
 I am not responsible for anyone's configs getting deleted or modified in ways they don't want as 
 a result of the uninstall script. 
 
-1. copy nord.sh from git directory to ~/.config/scripts
+#### Copy nord.sh and nordtoggle.sh from git directory to ~/.config/scripts
   ```bash
-  mkdir -p ~/.config/scripts ; cp nord.sh ~/.config/scripts
+  mkdir -p ~/.config/scripts ; cp nord.sh nordtoggle.sh ~/.config/scripts
   ```
 
-2. copy nordbar.service to ~/.config/systemd/user/
+#### Copy nordbar.service to ~/.config/systemd/user/
   ```bash
   mkdir -p ~/.config/systemd/user ; cp nordbar.service ~/.config/systemd/user/
   ```
 
-3. copy country-by-abbreviation.json to ~/.config/waybar/assets (helps with country name shortening)
+#### Copy country-by-abbreviation.json to ~/.config/waybar/assets (helps with country name shortening)
   ```bash
   mkdir -p ~/.config/waybar/assets ; cp country-by-abbreviation.json ~/.config/waybar/assets
   ```
 
-4. enable systemd service
+#### Enable systemd service
   ```bash
   systemctl --user enable --now nordbar
   ```
 
-5. add to your waybar config
+#### Add to your waybar config
   ```jsonc
   {
     "modules-right": [
@@ -78,7 +93,7 @@ a result of the uninstall script.
   },
   ```
 
-6. add to your waybar style.css
+#### Add to your waybar style.css
   ```css
   #custom-vpn {
     padding: 0px 5px;
@@ -92,12 +107,24 @@ a result of the uninstall script.
   }
   ```
 
-7. restart waybar  
-on hyprland (cleaner):
+#### Add a default country (optional)
+Open the togglenord.sh file in ~/.config/scripts and edit the DEFAULT_COUNTRY field to
+equal whatever country you want.
+I'd recommend running `nordvpn c your_country` (replacing your_country with the name of
+the actual country) beforehand to make sure syntax, spelling, etc. are correct.
+```bash
+{your_editor_here} ~/.config/scripts/togglenord.sh
+DEFAULT_COUNTRY="" -> DEFAULT_COUNTRY="your_country"
+```
+
+#### Restart waybar
+On hyprland (cleaner):
 ```bash
 pkill waybar ; hyprctl dispatch exec waybar
 ```
-on any other wayland compositor: 
+On any other wayland compositor: 
 ```bash
 pkill waybar ; waybar &
 ```
+
+Done!
